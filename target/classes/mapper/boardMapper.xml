@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+    <insert id="save" parameterType="board"> <!-- 리포지터리에서 boardDTO를 넘겨받았으므로 boardDTO의 타입인 BoardDTO를 parameterType으로 명시해줘야함. 근데 원래는 "com.yunhee.board.dto.BoardDTO"라고 적어줘야하는데 mybatis-config.xml에서 해당 타입을 "board"라고 쓰기로 했으므로(alias="board") parameterType이 "board"라고 해줌   -->
+        insert into board_table(boardWriter, boardPass, boardTitle, boardContents) <!-- db 컬럼명 -->
+        values(#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents}) <!-- 값들은 BoardDTO의 필드명과 동일해야함 -->
+    </insert>
+    <select id="findAll" resultType="board"> <!-- resultType은 select 쿼리를 수행할 때 반드시 포함시켜줘야함, 여기서는 BoardDTO를 약칭한 board라고 적어줌 -->
+        select *
+        from board_table
+        order by id desc <!-- mapper에서는 쿼리 마지막에 ';'은 안씀 -->
+    </select>
+    <select id="findById" parameterType="Long" resultType="board"> <!-- repository에서 id 넘겨받았으므로 parameterType="Long", resultType은 select문이므로 포함 -->
+        select *
+        from board_table
+        where id = #{id}
+    </select>
+    <update id="updateHits" parameterType="Long"> <!-- select가 아니므로 resultType은 미포함 -->
+        update board_table
+        set boardHits = boardHits + 1
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="Long">
+        delete from board_table
+        where id = #{id}
+    </delete>
+    <update id="update" parameterType="board">
+        update board_table
+        set boardTitle = #{boardTitle}, boardContents = #{boardContents}
+        where id = #{id}
+    </update>
+</mapper>
