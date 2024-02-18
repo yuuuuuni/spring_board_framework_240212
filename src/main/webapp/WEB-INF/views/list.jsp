@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> <!-- HTML 써야할 때 해당 속성 기입 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  <%-- JSP의 반복문 써야할 때 해당 속성 기입 --%>
 
 <html>
 <head>
